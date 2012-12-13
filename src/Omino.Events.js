@@ -1,43 +1,50 @@
 var Events = Omino.Events = {
-	on: function(events,callback,context){
-		var calls,event;
-		events = events.split('\\s+');
-		while(event = event.shift()){
+	on: function(events, callback, context) {
+		var calls;
+		events = events.split(/\s+/);
+		if(!this._callbacks) {
+			this._callbacks = {};
+		}
+		_.forEach(events, function(event, index) {
 			calls = this._callbacks[event] || [];
 			calls.push({
-				callback : callback,
-				 context : context || this
+				callback: callback,
+				context: context || this
 			});
-			this._callbacks[event]=calls;
-		}
+			this._callbacks[event] = calls;
+		}, this);
 	},
 
-	off: function(events,callback,context){
+	off: function(events, callback, context) {
 		var calls;
-		if(!(calls=this._callbacks)){return;}
+		if(!(calls = this._callbacks)) {
+			return;
+		}
 
-		if(!(events || callback||context)){
+		if(!(events || callback || context)) {
 			delete this._callbacks;
 			return this;
 		}
 
-		events = events.split('\\s+');
-		while(event = events.shift()){
-			if((calls = this._callbacks[event])!==undefined){
-				this._callbacks[event]= _.filter(calls,function(value,index){
-					return (value.callback===callback && (context!==undefined && value.context === context));
+		events = events.split(/\s+/);
+		while(event = events.shift()) {
+			if((calls = this._callbacks[event]) !== undefined) {
+				this._callbacks[event] = _.filter(calls, function(value, index) {
+					return(value.callback === callback && (context !== undefined && value.context === context));
 				});
 			}
 		}
 	},
 
-	trigger : function(events, parameters){
-		events = events.split('\\s+');
-		while(event = events.shift()){
-			calls = this._callbacks[event] || [];
-			_.forEach(calls, function(value,index){
-				value.callback.apply(value.context || this,parameters);
-			},this);
+	trigger: function(events, parameters) {
+		var calls,allCalls;
+		events = events.split(/\s+/);
+		allCalls = this._callbacks || [];
+		while(event = events.shift()) {
+			calls = allCalls[event] || [];
+			_.forEach(calls, function(value, index) {
+				value.callback.apply(value.context || this, parameters);
+			}, this);
 		}
 	}
 };

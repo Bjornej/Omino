@@ -13,9 +13,13 @@
   <!-- assertion framework -->
   
   <script src="lib/chai.js"></script>
-    
-      
-  <script>expect = chai.expect</script>
+   <script src="lib/sinon.js"></script> 
+  <script src="lib/sinon-chai.js"></script>
+  <script type="text/javascript">
+  expect = chai.expect;
+  chai.should();
+  chai.use(sinonChai);
+  </script>
       
     
   
@@ -23,22 +27,13 @@
   <!-- -->
 
   <!-- include source files here... -->
-
+<script type="text/javascript" src="../deps/lodash.js" ></script>
+<script type="text/javascript" src="../src/Omino.js" ></script>
+<script type="text/javascript" src="../src/Omino.Events.js" ></script>
+<script type="text/javascript" src="../src/Omino.Model.js" ></script>
   <!-- include spec files here... -->
-  <script>
-  // replace this by your own specs
-  (function() {
-    describe('Give it some context', function() {
-      describe('maybe a bit more context here', function() {
-
-        it('should run here few assertions', function() {
-
-        });
-
-      });
-    });
-  })();
-  </script>
+<script type="text/javascript" src="spec/Test.Events.js" ></script>
+<script type="text/javascript" src="spec/Test.Model.js" ></script>
 
   <!-- trigger the mocha runner -->
   <script src="runner/mocha.js"></script>
