@@ -40,10 +40,11 @@ var Events = Omino.Events = {
 		var calls,allCalls;
 		events = events.split(/\s+/);
 		allCalls = this._callbacks || [];
+		debugger;
 		while(event = events.shift()) {
 			calls = allCalls[event] || [];
 			_.forEach(calls, function(value, index) {
-				value.callback.apply(value.context || this, parameters);
+				value.callback.call(value.context || this, parameters);
 			}, this);
 		}
 	}
