@@ -2,7 +2,6 @@ describe("Model",function(){
 	var testModel,testInstance;
 
 	beforeEach(function(){
-		debugger;
 		testModel = Omino.Model.extend({});
 		testInstance = new testModel({});
 	});
