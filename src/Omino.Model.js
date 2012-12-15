@@ -1,6 +1,7 @@
 
 var Model = Omino.Model = function(attributes, options){
 	this.attributes = {};
+	this.cid = _.uniqueId("m");
 };
 
 Model.extend = extend;
