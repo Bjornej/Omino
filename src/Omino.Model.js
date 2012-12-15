@@ -3,9 +3,7 @@ var Model = Omino.Model = function(attributes, options){
 	this.attributes = {};
 };
 
-Model.extend = function(parameters){
-	return _.extend(parameters, Model.prototype);
-};
+Model.extend = extend;
 
 _.extend(Model.prototype, Omino.Events, {
 	initialize : function(){},
@@ -13,12 +11,22 @@ _.extend(Model.prototype, Omino.Events, {
 		var currentValue = this.attributes[attribute];
 		this.attributes[attribute] = value;
 		if(value!==currentValue){
-			this.trigger("change");
+			this.trigger("change:"+attribute,value);
+			this.trigger("change",value);
 		}
 	},
 
 	get: function(attribute){
 		return this.attributes[attribute];
+	},
+
+	unset: function(attribute){
+		var value = this.attributes[attribute];
+		delete this.attributes[attribute];
+		if(value!==undefined){
+			this.trigger("change:"+attribute,value);
+			this.trigger("change",value);
+		}
 	}
 
 });
