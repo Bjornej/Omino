@@ -1,4 +1,4 @@
-Omino
+OMINO
 =====
 
 This project is a simple test to learn how some technologies work, primarily:
