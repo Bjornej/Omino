@@ -4,17 +4,27 @@ var View = Omino.View = function(){
 	el += " />";
 	this.el = el;
 	this.$el = $(el);
+	this.initialize();
+
 };
 
 _.extend(View.prototype, Omino.Events, {
 
 	tagName : "div",
 
+	initialize : function(){},
+
+	beforeRender : function(){},
+
 	render : function(){
 		this.trigger("before:render");
+		this.beforeRender();
 		this.$el.html(this.template(this.serializeData()));
+		this.afterRender();
 		this.trigger("after:render");
 	},
+
+	afterRender : function(){},
 
 	serializeData : function(){
 		var model = this.model.toJSON();
