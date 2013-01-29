@@ -9,4 +9,4 @@ This project is a simple test to learn how some technologies work, primarily:
 
 The final objective is to write a working Javascript MVC library which should emphasize ease of use.
 
-Feel fre to point out errors or suggest features 
+Feel free to point out errors or suggest features 

@@ -2,7 +2,11 @@ describe("Model",function(){
 	var testModel,testInstance;
 
 	beforeEach(function(){
-		testModel = Omino.Model.extend({});
+		testModel = Omino.Model.extend({
+			computedProperties: {
+				"FullName" : function(){ return this.get("Name") + " " + this.get("Surname");}
+			}
+		});
 		testInstance = new testModel({});
 	});
 
@@ -22,15 +26,15 @@ describe("Model",function(){
 
 		it("should trigger a specific change event",function(){
 			var listener = sinon.spy();
-			testInstance.on("change:prova",listener,this)
+			testInstance.on("change:prova",listener,this);
 			testInstance.set("prova",2);
 			listener.should.have.been.called;
 		});	
 
 		it("should not trigger a change event if value equals current",function(){
 			var listener = sinon.spy();
-			testInstance.set("prova",2);		
-			testInstance.on("change",listener)
+			testInstance.set("prova",2);
+			testInstance.on("change",listener);
 			testInstance.set("prova",2);
 			listener.should.not.have.been.called;
 		});		
@@ -52,5 +56,16 @@ describe("Model",function(){
 			expect(testInstance.get("prova")).to.equal(undefined);
 		});
 	});		
+
+
+
+	describe("computedProperties",function(){
+		it("should calculate on change",function(){
+			testInstance.set("Name","test");
+			testInstance.set("Surname","computed");
+			testInstance.get("FullName").should.equal("test computed");
+		});
+
+	});
 
 });
