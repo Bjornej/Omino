@@ -1,10 +1,14 @@
-var View = Omino.View = function(){
-	var el = "<" + this.tagName;
-	if(this.className){el+= " class=\"" + this.className + "\"";}
-	el += " />";
-	this.el = el;
-	this.$el = $(el);
-	this.initialize();
+var View = Omino.View = function(options){
+	this.setUpOptions(options);
+	if(this.el===undefined){
+		var el = "<" + this.tagName;
+		if(this.className){el+= " class=\"" + this.className + "\"";}
+		el += " />";
+		this.el = el;
+	}
+	this.$el = $(this.el);
+
+	this.initialize(options);
 
 };
 
@@ -30,6 +34,13 @@ _.extend(View.prototype, Omino.Events, {
 		var model = this.model.toJSON();
 		model.options = this.options;
 		return model;
+	},
+
+
+	setUpOptions: function(options){
+		this.options={};
+		_.assign(this,_.pick(options,["model","collection","el","tagName","className"]));
+		_.assign(this.options,_.omit(options,["model","collection","el","tagName","className"]));
 	}
 });
 

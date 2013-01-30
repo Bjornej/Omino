@@ -28,6 +28,21 @@ describe("View", function() {
 			testInstance.el.should.be.equal("<div class=\"prova\" />");
 		});
 
+		it("copies model  to view properties", function() {
+			var model = { test : 2};
+			testView = Omino.View.extend({});
+			testInstance = new testView({ model : model});
+			testInstance.model.should.be.equal(model);
+		});	
+
+
+		it("copies collection  to view properties", function() {
+			var model = { test : 2};
+			testView = Omino.View.extend({});
+			testInstance = new testView({ collection : model});
+			testInstance.collection.should.be.equal(model);
+		});		
+
 	});
 
 
