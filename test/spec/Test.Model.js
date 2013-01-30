@@ -3,11 +3,21 @@ describe("Model",function(){
 
 	beforeEach(function(){
 		testModel = Omino.Model.extend({
+			defaults: {
+				"Test":2
+			},
 			computedProperties: {
 				"FullName" : function(){ return this.get("Name") + " " + this.get("Surname");}
 			}
 		});
 		testInstance = new testModel({});
+	});
+
+
+	describe("constructor",function(){
+		it("sould set default properties",function(){
+			testInstance.get("Test").should.equal(2);
+		});
 	});
 
 	describe("set",function(){
@@ -65,7 +75,6 @@ describe("Model",function(){
 			testInstance.set("Surname","computed");
 			testInstance.get("FullName").should.equal("test computed");
 		});
-
 	});
 
 });
