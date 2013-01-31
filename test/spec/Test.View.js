@@ -121,4 +121,22 @@ describe("View", function() {
 	});
 
 
+describe('modelEvents', function() {
+  it('listens to model events', function() {
+    var spy = sinon.spy();
+    var mod = Omino.Model.extend({});
+    var model = new mod();
+    testView = Omino.View.extend({});
+    var instanceView= new testView({
+				model : model,
+				modelEvents:{
+					"change:Test"  : spy
+				}
+			});
+    model.trigger("change:Test");
+    spy.should.have.been.called;
+  });
+});
+
+
 });

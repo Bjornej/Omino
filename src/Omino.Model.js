@@ -30,7 +30,6 @@ _.extend(Model.prototype, Omino.Events, {
 	},
 
 	setUpComputedProperties: function(){
-		debugger;
 		_.forOwn(this.computedProperties || {}, function(value,key){
 	 		var program;
 			if(_.isString(value)){
@@ -43,7 +42,7 @@ _.extend(Model.prototype, Omino.Events, {
 						program = _.bind(program,this);
 			properties = _.map(properties, function(element){return element.replace("\"","").replace("\"","");})
 			for(var i = 0;i< properties.length;i++){
-				this.on("change:"+properties[i],function(){debugger; this.set(key,program());},this);
+				this.on("change:"+properties[i],function(){ this.set(key,program());},this);
 			}
 
 		}, this);
