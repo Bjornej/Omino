@@ -14,10 +14,22 @@ var View = Omino.View = function(options) {
 		this.setUpEvents(options);
 	};
 
+Omino.Renderer = {
+	render : function(template,data){
+		return template(data);
+	},
+
+	getTemplate : function(){
+		return this.template;
+	}
+
+};
+
+
 
 var baseOptions = ["model", "collection", "el", "tagName", "className","modelEvents","collectionEvents","events"];
 
-_.extend(View.prototype, Omino.Events, {
+_.extend(View.prototype, Omino.Events, Omino.Renderer, {
 
 	tagName: "div",
 
@@ -25,10 +37,12 @@ _.extend(View.prototype, Omino.Events, {
 
 	beforeRender: function() {},
 
+
+
 	render: function() {
 		this.trigger("before:render");
 		this.beforeRender();
-		this.$el.html(this.template(this.serializeData()));
+		this.$el.html(Omino.Renderer.render(this.getTemplate(),this.serializeData()));
 		this.afterRender();
 		this.trigger("after:render");
 	},
@@ -36,9 +50,11 @@ _.extend(View.prototype, Omino.Events, {
 	afterRender: function() {},
 
 	serializeData: function() {
-		var model = this.model.toJSON();
-		model.options = this.options;
-		return model;
+		var data = {};
+		if(this.model){	data = this.model;}
+		if(this.collection){data = this.collection;}
+		data.options = this.options;
+		return data;
 	},
 
 
