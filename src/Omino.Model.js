@@ -55,6 +55,10 @@ _.extend(Model.prototype, Omino.Events, {
 			this.trigger("change:"+attribute,value);
 			this.trigger("change",value);
 		}
+	},
+
+	toJSON: function(){
+		return _.clone(this.attributes);
 	}
 
 });
